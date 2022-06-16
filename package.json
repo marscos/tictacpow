@@ -1,0 +1,23 @@
+{
+  "name": "tictacpow",
+  "version": "1.0.0",
+  "description": "Tic tac toe",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc --project tsconfig.json",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marscos/tictacpow.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marscos/tictacpow/issues"
+  },
+  "homepage": "https://github.com/marscos/tictacpow#readme",
+  "devDependencies": {
+    "typescript": "^4.7.3"
+  }
+}
