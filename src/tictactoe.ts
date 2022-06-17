@@ -1,34 +1,50 @@
+type PlayerScore = {
+    rows: number[],
+    columns: number[],
+    diagonals: number[]
+}
+
+type GamePlayers = { [name: string]: PlayerScore }
+
 export default class TicTacToe {
 
     n: number
-    board: number[][]
-    rows: { 
-        [player: string]: number[]
-    } = { 1: [], 2: [] }
-    columns: { 
-        [player: string]: number[]
-    } = { 1: [], 2: [] }
-    diagonals: { 
-        [player: string]: number[]
-    } = { 1: [0, 0], 2: [0, 0] }
+    board: string[][]
+    players: GamePlayers
+    movesPlayed: number
 
-    constructor(n: number = 3) {
+    constructor(n: number = 3, playerNames: string[] = ["1", "2"]) {
         this.n = n
-        this.board = new Array(n).fill(0).map(() => new Array(n).fill(0))
-        Object.entries(this.rows).forEach(([player]) => {
-            this.rows[player] = new Array(this.board.length).fill(0)
-            this.columns[player] = new Array(this.board.length).fill(0)
-        })
+        this.board = new Array(n).fill("").map(() => new Array(n).fill(""))
+        this.movesPlayed = 0
+        this.players = playerNames.reduce( (prev, curr): GamePlayers => {
+            return {
+                ...prev,
+                [curr]: {
+                    rows: new Array(this.board.length).fill(0),
+                    columns: new Array(this.board.length).fill(0),
+                    diagonals: [0, 0]
+                }
+            }
+        }, {})
     }
 
-    move(x: number, y: number, player: number): boolean {
+    /**
+     * Player {player} claims coordinates {x},{y} on the board.
+     * Code intentionally made weird.
+     * @param x 
+     * @param y 
+     * @param player 
+     * @returns {boolean|string} The winner's name or a boolean indicating whether to continue the game
+     */
+    move(x: number, y: number, player: string): boolean | string {
         this.board[x][y] = player
         return (
-            ++this.rows[player][x] === this.n ||
-            ++this.columns[player][y] === this.n ||
-            (x === y && ++this.diagonals[player][0]) === this.n ||
-            (x + y === (this.n - 1) && ++this.diagonals[player][1]) === this.n
-        )
+            ++this.players[player].rows[x] === this.n ||
+            ++this.players[player].columns[y] === this.n ||
+            (x === y && ++this.players[player].diagonals[0]) === this.n ||
+            (x + y === (this.n - 1) && ++this.players[player].diagonals[1]) === this.n
+        ) ? player : !(++this.movesPlayed === this.n*this.n)
     }
 
 }
