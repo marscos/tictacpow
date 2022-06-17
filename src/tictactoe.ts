@@ -35,16 +35,17 @@ export default class TicTacToe {
      * @param x 
      * @param y 
      * @param player 
-     * @returns {boolean|string} The winner's name or a boolean indicating whether to continue the game
+     * @returns {null|undefined|string} The winner
      */
-    move(x: number, y: number, player: string): boolean | string {
+    move(x: number, y: number, player: string): null | undefined | string {
+        if (this.board[x][y]) throw "Illegal move"
         this.board[x][y] = player
         return (
             ++this.players[player].rows[x] === this.n ||
             ++this.players[player].columns[y] === this.n ||
             (x === y && ++this.players[player].diagonals[0]) === this.n ||
             (x + y === (this.n - 1) && ++this.players[player].diagonals[1]) === this.n
-        ) ? player : !(++this.movesPlayed === this.n*this.n)
+        ) ? player : ++this.movesPlayed === this.n*this.n ? null : undefined
     }
 
 }
