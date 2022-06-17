@@ -1,2 +1,2 @@
-import TicTacToe from "./tictactoe";
+import TicTacToe from "./src/tictactoe";
 
